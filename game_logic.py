@@ -55,5 +55,13 @@ def play_game():
         if guess not in secret_word:
             mistakes += 1
 
+def main():
+    while True:
+        play_game()
+        again = input("Play again? (y/n): ").lower().strip()
+        if again != "y":
+            break
+
 if __name__ == "__main__":
-    play_game()
+    main()
+

@@ -1,22 +1,21 @@
 import random
+
 from ascii_art import STAGES
 
 WORDS = ["python", "git", "github", "snowman", "meltdown"]
 
+
 def get_random_word():
-    return WORDS[random.randint(0, len(WORDS) - 1)]
+    return random.choice(WORDS)
+
 
 def display_game_state(mistakes, secret_word, guessed_letters):
     print(STAGES[mistakes])
 
-    display_word = ""
-    for letter in secret_word:
-        if letter in guessed_letters:
-            display_word += letter + " "
-        else:
-            display_word += "_ "
-    print("Word: ", display_word)
+    display_word = " ".join(letter if letter in guessed_letters else "_" for letter in secret_word)
+    print("Word:", display_word)
     print()
+
 
 def play_game():
     secret_word = get_random_word()
@@ -29,19 +28,16 @@ def play_game():
     while True:
         display_game_state(mistakes, secret_word, guessed_letters)
 
-        # Win condition
         if all(letter in guessed_letters for letter in secret_word):
             print("You saved the snowman!")
             break
 
-        # Lose condition
         if mistakes >= max_mistakes:
             print("Game Over! The word was:", secret_word)
             break
 
         guess = input("Guess a letter: ").lower().strip()
 
-        # Simple input validation
         if len(guess) != 1 or not guess.isalpha():
             print("Please enter a single letter.")
             continue
@@ -55,6 +51,7 @@ def play_game():
         if guess not in secret_word:
             mistakes += 1
 
+
 def main():
     while True:
         play_game()
@@ -62,6 +59,6 @@ def main():
         if again != "y":
             break
 
+
 if __name__ == "__main__":
     main()
-
